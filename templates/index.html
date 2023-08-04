@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h3>Upload to S3</h3>
+
+    <form id="upload-form" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
+        <input type="file" name="file-to-save" />
+        <button>Upload</button>
+        <div id="uploading-spinner" style="display: none;">Uploading...</div>
+    </form>
+
+    <div id="process-btn-container" style="display: none;">
+        <button id="process-btn">AI Process</button>
+        <div id="processing-spinner" style="display: none;">Processing...</div>
+    </div>
+
+    <!-- Add a button to navigate to the video display page -->
+    <div id="video-display-btn-container" style="display: none;">
+        <button id="video-display-btn">View Processed Video</button>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById("upload-form");
+        const processBtnContainer = document.getElementById("process-btn-container");
+        const processBtn = document.getElementById("process-btn");
+        const uploadingSpinner = document.getElementById("uploading-spinner");
+        const processingSpinner = document.getElementById("processing-spinner");
+        const videoDisplayBtnContainer = document.getElementById("video-display-btn-container");
+        const videoDisplayBtn = document.getElementById("video-display-btn");
+
+        uploadForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            uploadingSpinner.style.display = "block"; // Show the "Uploading..." message
+
+            const formData = new FormData(uploadForm);
+            const response = await fetch("/", {
+                method: "POST",
+                body: formData
+            });
+
+            uploadingSpinner.style.display = "none"; // Hide the "Uploading..." message
+
+            if (response.ok) {
+                processBtnContainer.style.display = "block";
+            }
+        });
+
+        processBtn.addEventListener("click", async () => {
+            processingSpinner.style.display = "block"; // Show the "Processing..." message
+
+            const response = await fetch("/process", { method: "POST" });
+
+            processingSpinner.style.display = "none"; // Hide the "Processing..." message
+
+            if (response.ok) {
+                alert("File processing Completed check s3!");
+                videoDisplayBtnContainer.style.display = "block"; // Show the "View Processed Video" button
+            } else {
+                alert("Failed to start file processing!");
+            }
+        });
+
+        videoDisplayBtn.addEventListener("click", () => {
+            window.open("/videodisplay", "_blank"); // Open the video display page in a new tab
+        });
+    </script>
+</body>
+</html>

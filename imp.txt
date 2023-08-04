@@ -1,0 +1,55 @@
+Bucket_name 
+my-soccer-video-bucket
+
+
+function name 
+
+SoccerGoalDetector
+
+
+lamda urlarn:aws:lambda:ap-southeast-2:226177262630:function:SoccerGoalDetector
+
+
+
+function url
+
+https://o4zb4vtbkakkgr3imvxxzmkb2i0bffwl.lambda-url.ap-southeast-2.on.aws/
+
+
+
+command to runpython detect.py --weights weights/yolov5x.pt --img 640 --conf 0.25 --source /Users/vishruthbharadwaj/Desktop/object_detection/3rd/bundesliga_data/clips/football_goal.mp4
+
+
+
+access key AKIATJKJXEQTI3FXLCL6
+
+secret key 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
+
+
+
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicRead",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+
+
+2nd time access key data
+
+
+key
+
+Access key
+
+AKIATJKJXEQTB5YOBMOQ
+
+Secret access key
+/O76HanWMfwz85RSOGXzaCpXLtjISYu8fZc5EjA+
